@@ -16,7 +16,10 @@ RUN polkadot --version
 
 # Add Aura and Grandpa keys to keystore
 CMD [ "SEED=$(cat /config/node_key) && \
-./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=sr25519 --suri="0x$SEED" --key-type=aura && \
-./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=ed25519 --suri="0x$SEED" --key-type=gran" ]
+./polkadot purge-chain -y --base-path=/config/node/ && \
+./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=ed25519 --suri="0x$SEED" --key-type=gran && \
+./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=sr25519 --suri="0x$SEED" --key-type=babe && \
+./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=sr25519 --suri="0x$SEED" --key-type=imon && \
+./polkadot key insert --base-path=/config/node/ --chain=/chain-specs/relay-chain-spec.json --scheme=sr25519 --suri="0x$SEED" --key-type=para" ]
 
 VOLUME [ "/config" ]
